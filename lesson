@@ -1,15 +1,15 @@
 #===Creating SSH service with Dokerfile===
-#
-#1. docker build -t thakker-sshd .
-#2.Afther imags was downloded and we gave it a tag, now we would like to run the image as a container.
+
+1. docker build -t thakker-sshd .
+2.Afther imags was downloded and we gave it a tag, now we would like to run the image as a container.
 
 docker run -d -P thakker-shhd #(-d deamon -P open all ports, also the CMD in docker file will run)
 
-# now we will run docker ps 
-# ssh root@ip_docker -p <port> and pass like we wnar in Dockerfile CMD
+ now we will run docker ps 
+ ssh root@ip_docker -p <port> and pass like we wnar in Dockerfile CMD
 
 #===Creating an SSH service by commiting a container ===
-docker images #chose ubuntu
+docker images #choose ubuntu
 
 docker run -i -t -p 22 ubuntu:14.04 /bin/bash
 
@@ -18,8 +18,9 @@ apt-get update && apt-get install openssh-server -y
 
 #type passwrod
 #edit the conf file of ssh /etc/ssh/sshd_config
-#2 thing need to changed, one is to set Premotlogin to = yes.
-#second is all the way to the botton UsePam=No.
+2 thing need to changed:
+a.one is to set Premotlogin to = yes.
+b.second is all the way to the botton UsePam=No.
 
 service ssh start
 
@@ -29,5 +30,11 @@ docker commit <name of our container (ssh-serv)> <name of the image thakker/ubun
 
 docker images  
 
+###Pull image###
 
+#docker-registry
+docker pull <name/name:tag> (rastaship/ubuntu-sshd:14.04)
+
+#===Mapping specific ports to containers===
+docker run -d -p 9090:22 <image name:tag> /usr/sbin/sshd -D 
 
